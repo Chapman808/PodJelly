@@ -9,11 +9,12 @@ import urllib.parse
 def downloadFiles(files : list):
     if (not os.path.exists('downloads')):
         os.mkdir('downloads')
+    newFilenames = []
     for file in files:
         filename = urllib.parse.urlsplit(file).path.split('/')[-1]
         urllib.request.urlretrieve(file, 'downloads/' + filename)
-        print ('downloaded: ' + filename)
-
+        newFilenames.append('./downloads/' + filename)
+    return newFilenames
 #if run as main, downloads given list of files
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

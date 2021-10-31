@@ -1,4 +1,4 @@
-from os import path, wait
+from os import path, mkdir
 from os.path import exists
 
 import speech_recognition as sr
@@ -10,15 +10,14 @@ from chunk_wav import get_large_audio_transcription
 
 #converts given filename to wav and outputs the wav file to the outputdir. returns output filename
 def writeMp3ToWav(filename, outputDir):
-    inputDir = fileName.rsplit("/", 1)[0] + "/"
-    outputFileName = baseFileName + ".wav"
-    print("input file: " + inputDir + baseFileName + ".mp3")
-    print("output file: " + outputDir + outputFileName)
-    if (not exists(outputDir + outputFileName)):
-        print("converting audio to wav...")
-        audioSegment = AudioSegment.from_mp3(inputDir + fileName)
-        audioSegment.export(outputDir + outputFileName, format="wav")
-    return outputDir + outputFileName
+    if (not path.exists(outputDir)):
+        mkdir(outputDir)
+    baseFilename = filename.rsplit(".", 1)[0].split("/")[-1]    #just the 'name' portion of the filename
+    outputFilename = baseFilename + ".wav"
+    if (not exists(outputDir + outputFilename)):
+        audioSegment = AudioSegment.from_mp3(filename)
+        audioSegment.export(outputDir + outputFilename, format="wav")
+    return outputDir + outputFilename
 
 #transcribes wav file and returns str of transcript
 def transcribeWav(wavFile : str):
