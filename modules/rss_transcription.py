@@ -15,13 +15,18 @@ if __name__ == "__main__":
 
     print('downloading mp3 files...')
     mp3Filenames = downloadFiles(reducedFileNames)
-    first_mp3 = mp3Filenames[0]
-    print('file to transcribe: ' + first_mp3)
+    #first_mp3 = mp3Filenames[0]
+    print('file to transcribe: ' + mp3Filenames)
 
-    print('converting mp3 to wav...')
-    wavFilename = writeMp3ToWav(first_mp3, './wav/')
-    print('wav filename: ' + wavFilename)
+    print('converting mp3 files to wav...')
+    wavFilenames = []
+    for filename in mp3Filenames:
+        wavFilename = writeMp3ToWav(filename)
+        wavFilenames.append(wavFilename)
+    
+    print('wav filenames: ' + wavFilenames)
 
-    print('chunking and transcribing wav...')
-    transcription = transcribeWavToDisk(wavFilename)
+    print('chunking and transcribing wav files...')
+    for wavFilename in wavFilenames:
+        transcribeWavToDisk(wavFilename)
 

@@ -9,7 +9,8 @@ from chunk_wav import get_large_audio_transcription
 #conversion to WAV
 
 #converts given filename to wav and outputs the wav file to the outputdir. returns output filename
-def writeMp3ToWav(filename, outputDir):
+def writeMp3ToWav(filename):
+    outputDir = './wav/'
     if (not path.exists(outputDir)):
         mkdir(outputDir)
     baseFilename = filename.rsplit(".", 1)[0].split("/")[-1]    #just the 'name' portion of the filename
