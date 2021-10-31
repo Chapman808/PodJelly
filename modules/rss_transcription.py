@@ -1,7 +1,7 @@
 import argparse
 from extract_rss_files import getFeedFiles
 from file_downloader import downloadFiles
-from transcribe_wav import writeMp3ToWav
+from transcribe_wav import transcribeWavToDisk, writeMp3ToWav
 from transcribe_wav import transcribeWav
 #if run as main, creates list of urls based on the given RSS feed and writes it to a file
 if __name__ == "__main__":
@@ -23,5 +23,5 @@ if __name__ == "__main__":
     print('wav filename: ' + wavFilename)
 
     print('chunking and transcribing wav...')
-    transcription = transcribeWav(wavFilename)
-    
+    transcription = transcribeWavToDisk(wavFilename)
+

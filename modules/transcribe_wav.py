@@ -39,6 +39,16 @@ def transcribeWav(wavFile : str):
             if text: transcript += text
     return transcript
 
+def transcribeWavToDisk (wavFile: str):
+    transcriptDir = "./transcripts/"
+    baseFileName = wavFile.rsplit(".", 1)[0].split("/")[-1]    #just the 'name' portion of the filename
+    outputFilename = transcriptDir + baseFileName + '.txt'
+    print('transcript filename: ' + outputFilename)
+    with open (outputFilename, 'w') as transcript:
+        audio_out = transcribeWav(wavFile)
+        print(audio_out)
+        transcript.write(audio_out)
+
 def transcribe_chunk (audio, r): 
     transcript = None
     try:                                    
@@ -47,13 +57,8 @@ def transcribe_chunk (audio, r):
     return transcript
 
 if __name__ == '__main__':
-    fileName = "./downloads/demo.mp3"
     outputDir = "./wav/"
-    baseFileName = fileName.rsplit(".", 1)[0].split("/")[-1]    #just the 'name' portion of the filename
     transcriptDir = "./transcripts/"
-    AUDIO_FILE = './wav/2021_07_10_0357.wav'
-    #AUDIO_FILE = './wav/demo.wav'
-    with open (transcriptDir + baseFileName + '.txt', 'w') as transcript:
-        audio_out = transcribeWav(AUDIO_FILE)
-        print(audio_out)
-        transcript.write(audio_out)
+    AUDIO_FILE = './wav/demo.wav'
+    transcribeWavToDisk(AUDIO_FILE)
+    
