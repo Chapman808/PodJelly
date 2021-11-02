@@ -1,6 +1,6 @@
 # PodJelly
 
-![image](https://user-images.githubusercontent.com/16928672/139944372-5d093766-9755-4ef7-985c-624f9030b2ed.png)
+![image](https://user-images.githubusercontent.com/16928672/139944616-4e8a84fa-3e5e-4a33-b675-ff67bbf6ea11.png)
 
 PodJelly is a tool currently in development for generating transcriptions of a podcast/RSS-based audio feed from an RSS file.
 The parsing and transcription service is operational. Future developments are planned in the order listed:
