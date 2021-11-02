@@ -1,6 +1,12 @@
 # podcast-transcribe
 
-Podcast Transcriber is a tool for generating transcriptions for a podcast or RSS-based audio feed from an RSS file.
+Podcast Transcriber is a tool for currently in development for generating transcriptions of a podcast/RSS-based audio feed from an RSS file.
+The parsing and transcription service is operational. Future developments are planned in the order listed:
+
+ 1. Persistent database for transcript storage along with metadata (episode number, length, tags, etc).
+ 2. Front end web application for viewing transcripts (React.js)
+ 3. Automation of ingest process
+ 4. Add searching feature for specific words/phrases from transcript
 
 # Architecture
 
