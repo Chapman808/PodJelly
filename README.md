@@ -1,4 +1,4 @@
-# Podcast Transcription Center
+# Pod-to-text
 Podcast Transcriber is a tool for currently in development for generating transcriptions of a podcast/RSS-based audio feed from an RSS file.
 The parsing and transcription service is operational. Future developments are planned in the order listed:
 
