@@ -7,6 +7,7 @@ The parsing and transcription service is operational. Future developments are pl
 - [ ] Front end web application for viewing transcripts (React.js)
 - [ ] Automation of ingest process
 - [ ] Add searching feature for specific words/phrases from transcript
+- [ ] Containerization
 
 # Architecture
 
