@@ -12,3 +12,7 @@ The parsing and transcription service is operational. Future developments are pl
 # Architecture
 
 ![image](https://user-images.githubusercontent.com/16928672/139929165-a4e81ebb-1800-41ea-abfb-2da6469f4716.png)
+
+## DB/Storage Schema
+
+A main goal of this project is to support interactive indexing and listening of audio based on search terms. To fulfill this requirement, we will store each transcript as a series of chunks. For each chunk we will store an episode id, timestamp, and chunk transcript. 
