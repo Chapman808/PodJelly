@@ -4,10 +4,12 @@ PodJelly is a tool for generating transcriptions from a podcast/RSS audio feed.
 The parsing and transcription service is operational. Future developments are planned in the order listed:
 
 - [ ] Persistent database for transcript storage along with metadata (episode number, length, tags, etc).
+- [ ] Config yaml
 - [ ] Front end web application for viewing transcripts (React.js)
 - [ ] Automation of ingest process
 - [ ] Add searching feature for specific words/phrases from transcript
 - [ ] Containerization
+
 
 # Architecture
 
