@@ -3,8 +3,8 @@ from os.path import exists
 
 import speech_recognition as sr
 from pydub import AudioSegment
-from pydub.silence import split_on_silence
-from chunk_wav import get_large_audio_transcription
+from chunk_wav import getChunksFromWav
+from model.transcript_chunk import TranscriptChunk
 #Credit to: https://pythonbasics.org/transcribe-audio/
 #conversion to WAV
 
@@ -21,23 +21,32 @@ def writeMp3ToWav(filename):
     return outputDir + outputFilename
 
 #transcribes wav file and returns str of transcript
-def transcribeWav(wavFile : str):
-    chunks = get_large_audio_transcription(wavFile)
+def transcribeWav(wavFile : str) -> str:
+    chunks = getChunksFromWav(wavFile)
     print("okay, doing the fun stuff now. Transcribing audio chunks...")
     # use the audio file as the audio source  
     r = sr.Recognizer()
-    # r.energy_threshold = 1000
-    r.pause_threshold = .5
     transcript = ""
     count = 0
+    transcriptChunks = []
     for chunk in chunks:
         count += 1
-        with chunk as source:
+        audioFile = chunk.audioFile
+        with audioFile as source:
             percentComplete = str(count * 100 // len(chunks))
             print("Progress " + percentComplete + "%", end="\r", flush=True)
             audio = r.record(source)
-            text = transcribe_chunk(audio,r)
-            if text: transcript += text
+            text = _transcribe_chunk(audio,r)
+            if text: 
+                transcriptChunks.append(TranscriptChunk(text, chunk.timestampSeconds, chunk.episode))
+                transcript += text
+    return transcriptChunks
+
+def _transcribe_chunk (audio, r): 
+    transcript = None
+    try:                                    
+        transcript = r.recognize_google(audio) + " "
+    except: pass
     return transcript
 
 def transcribeWavToDisk (wavFile: str):
@@ -50,16 +59,11 @@ def transcribeWavToDisk (wavFile: str):
         print(audio_out)
         transcript.write(audio_out)
 
-def transcribe_chunk (audio, r): 
-    transcript = None
-    try:                                    
-        transcript = r.recognize_google(audio) + " "
-    except: pass
-    return transcript
+
 
 if __name__ == '__main__':
-    outputDir = "./wav/"
-    transcriptDir = "./transcripts/"
-    AUDIO_FILE = './wav/demo.wav'
-    transcribeWavToDisk(AUDIO_FILE)
+    AUDIO_FILE = './files/wav/harvard.wav'
+    chunks = transcribeWav(AUDIO_FILE)
+    for chunk in chunks:
+        print(chunk)
     

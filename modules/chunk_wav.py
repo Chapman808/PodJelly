@@ -6,16 +6,16 @@ import os
 from pydub import AudioSegment
 from pydub.silence import split_on_silence
 
+from model.audio_chunk import AudioChunk
+
 # create a speech recognition object
 r = sr.Recognizer()
 
-# a function that splits the audio file into chunks
-# and applies speech recognition
-def get_large_audio_transcription(path):
-    """
-    Splitting the large audio file into chunks
-    and apply speech recognition on each of these chunks
-    """
+'''
+splits the audio file into chunks
+returns list of speech_recognition.AudioFile objects
+'''
+def getChunksFromWav(path) -> list: 
     # open the audio file using pydub
     sound = AudioSegment.from_wav(path)  
     # split audio sound where silence is 700 miliseconds or more and get chunks
@@ -33,19 +33,23 @@ def get_large_audio_transcription(path):
     if not os.path.isdir(folder_name):
         os.mkdir(folder_name)
     whole_text = ""
-    # process each chunk 
-    srAudioFileChunks = []
+    # process each chunk into an AudioChunk object
+    processedChunks = []
+    timestamp = 0
     for i, audio_chunk in enumerate(chunks, start=1):
+        timestamp += audio_chunk.duration_seconds
         # export audio chunk and save it in
         # the `folder_name` directory.
         chunk_filename = os.path.join(folder_name, f"chunk{i}.wav")
         audio_chunk.export(chunk_filename, format="wav")
-        # recognize the chunk
+        # read the newly created wav into an AudioChunk object (stores timestamp and other metadata)
         with sr.AudioFile(chunk_filename) as source:
-            srAudioFileChunks.append(source)
-    return srAudioFileChunks
-
+            episodeName = path.split("/")[-1].split(".")[0]
+            processedChunks.append(AudioChunk(source, int(timestamp), episodeName))
+    return processedChunks
 
 if __name__ == '__main__':
-    AUDIO_FILE = './wav/demo.wav'
-    print(get_large_audio_transcription(AUDIO_FILE))
+    AUDIO_FILE = './files/wav/demo.wav'
+    audioChunks = getChunksFromWav(AUDIO_FILE)
+    for chunk in audioChunks:
+        print(chunk)
