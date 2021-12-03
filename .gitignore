@@ -1,6 +1,6 @@
-./transcripts/
-./wav/
-./downloads/
+**/files/transcripts/
+**/files/wav/
+**/files/downloads/
+**/files/audio-chunks/
+.vscode/
 ./audio-chunks/
-
-
