@@ -6,7 +6,7 @@ import os
 from pydub import AudioSegment
 from pydub.silence import split_on_silence
 
-from model.audio_chunk import AudioChunk
+from modules.model.audio_chunk import AudioChunk
 
 # create a speech recognition object
 r = sr.Recognizer()
@@ -38,8 +38,7 @@ def getChunksFromWav(path) -> list:
     timestamp = 0
     for i, audio_chunk in enumerate(chunks, start=1):
         timestamp += audio_chunk.duration_seconds
-        # export audio chunk and save it in
-        # the `folder_name` directory.
+        # export audio chunk and save it in the `folder_name` directory.
         chunk_filename = os.path.join(folder_name, f"chunk{i}.wav")
         audio_chunk.export(chunk_filename, format="wav")
         # read the newly created wav into an AudioChunk object (stores timestamp and other metadata)
@@ -49,7 +48,7 @@ def getChunksFromWav(path) -> list:
     return processedChunks
 
 if __name__ == '__main__':
-    AUDIO_FILE = './files/wav/demo.wav'
+    AUDIO_FILE = './files/wav/harvard.wav'
     audioChunks = getChunksFromWav(AUDIO_FILE)
     for chunk in audioChunks:
         print(chunk)
